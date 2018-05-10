@@ -1,4 +1,11 @@
 
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <iomanip>
+#include <ctime>
+#include <vector>
+#include <fstream>
 using namespace std;
 //waht 's this 
 const int ROW = 3,  COL = 3;
@@ -14,7 +21,7 @@ void displayReceipt();
 void createRecipt(const string[][COL], const double[][COL], const int[][COL]);
 void timeStamp();
 void saveDataInFile();
-
+void identifyUser();
 ////////////////////////////////////////////
 ///////////////ARRAY FOR ITEM///////////////
 //////////////ARRAY FOR PRICE///////////////
@@ -316,7 +323,7 @@ void createRecipt(const string menu[][COL], const double price[][COL], const int
 void displayReceipt()
 {
 	ClearScreen();
-	cout << "Casher: John Smith " << "\t\t";
+	cout << "Casher:  " << userName<< "\t\t";
 	timeStamp();
 	cout << setw(20) << left << "ITEM" << "                 " << "QTY" << "\t\t\tPRICE" << endl;
 	cout << "------------------------------------------------------------------------" << endl;
@@ -358,7 +365,7 @@ void saveDataInFile()
 	char* dt = ctime(&now);
 	ofstream outputFile;
 	outputFile.open("Data.txt");
-	outputFile << "Casher: John Smith " << "\t\t";
+	outputFile << "Casher:" << userName << "\t\t";
 	outputFile << dt << endl;
 	outputFile << "ITEM"<< setw(30)<<" \t\t\tquantity" << endl;
 	outputFile << "------------------------------------------------------" << endl;
@@ -380,5 +387,9 @@ void saveDataInFile()
 
 	outputFile.close();
 }
-
+void identifyUser()
+{
+  cout << "Please Enter User Name:";
+  cin >> userName;
+}
 
