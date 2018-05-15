@@ -1,6 +1,12 @@
-
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <iomanip>
+#include <ctime>
+#include <vector>
+#include <fstream>
 using namespace std;
-//waht 's this 
+
 const int ROW = 3,  COL = 3;
 void displayMenu();
 void displayFoodMenu();
@@ -14,6 +20,8 @@ void displayReceipt();
 void createRecipt(const string[][COL], const double[][COL], const int[][COL]);
 void timeStamp();
 void saveDataInFile();
+bool SearchItem(string);
+void AddItem(string , int );
 
 ////////////////////////////////////////////
 ///////////////ARRAY FOR ITEM///////////////
@@ -25,17 +33,8 @@ void saveDataInFile();
 ///////numberOfOrder[2][] is Drink
 ///////numberOfOrder[3][] is gift card
 ///////Base on 3 x 3
-
-/*TODO
-*1.	create new 1d vector
-*2.	Program must allow user to register account information, store information and output
-*	information onto a text file (user can be clerks, clients, manager...)
-*3. 	use stub and drivers to test functions (
-*4.	add  search and sort from arrays or vectors with regex. 
-*
-*/
-string itemName[ROW][COL]={{ "Bacon Sandwich"," Bistro Box","Turkey Burger" },
-                            { "Americano Caffe", "Carmel Macchiato", "Espresso " },
+string itemName[ROW][COL]={{ "Bacon Sandwich","Bistro Box","Turkey Burger" },
+                            { "Americano Caffe", "Carmel Macchiato", "Espresso" },
                             { "5 dollar gift card", "10 dollar gift card","15 dollar gift card" }
                             };
  double itemPrice[ROW][COL]={{ 4.5, 5.5, 4.5 },
@@ -66,13 +65,9 @@ int main()
 		//////////////////Main menu//////////////////
 		displayMenu();
 		cin >> UserInput;
-		while (UserInput < 0 || UserInput > 4)
-		{
-			cout << "Sorry choice, please enter option 1~4: ";
-			cin >> UserInput;
-		}
+		UserInput = inputValidate(UserInput);
 
-		if (UserInput == 4)
+		if (UserInput == 5)
 		{
 			displayReceipt();
 			return 0;
@@ -89,7 +84,7 @@ int main()
 				{
 					displayFoodMenu();
 					cin >> UserInput;
-					inputValidate(UserInput);
+					UserInput = inputValidate(UserInput);
 					switch (UserInput)
 					{
 					case 1:
@@ -128,7 +123,7 @@ int main()
 				{
 					displayDrinkMenu();
 					cin >> UserInput;
-					inputValidate(UserInput);
+					UserInput = inputValidate(UserInput);
 					switch (UserInput)
 					{
 					case 1:
@@ -167,7 +162,7 @@ int main()
 				{
 					displayGiftCard();
 					cin >> UserInput;
-					inputValidate(UserInput);
+					UserInput = inputValidate(UserInput);
 					switch (UserInput)
 					{
 					case 1:
@@ -200,15 +195,40 @@ int main()
 				} while (UserInput < 4);
 
 				break;
-			default:
-				displayReceipt();
+			/////////////////////Display all menu/////////////////////////////
+			case 4:
+                //Get User inputa
+                string itemSearch;
+                bool found = false;
+                cout << "Enter the item you want to search: ";
+                //ignore the prvopus input
+                cin.ignore();
+                getline(cin, itemSearch);
+                //ca
+                found = SearchItem(itemSearch);
+                if(found == false)
+                {
+                cout << "Sorry, the item was not found." << endl;
+                cout << "Enter anything to turn back.";
+                cin.ignore();
+                break;
+                }
+                else
+                {
+                 cout << "How many you want: ";
+                 cin >> numberWanted;
+                 numberWanted = inputQuantityValidate(numberWanted);
+                 /////***Add the number to the numberOfOrder****/////
+                 AddItem(itemSearch, numberWanted);
+                }
 
+                ///////////////////Otherwise  ////////////////////////////////////
 
-			}
-		}
+                }
+                }
 
-	} while (UserInput != 0);
-
+	} while (UserInput != 6);
+    displayReceipt();
 	return 0;
 }
 
@@ -226,8 +246,9 @@ void displayMenu()
 	cout << "1.Food" << endl;
 	cout << "2 Drink" << endl;
 	cout << "3.Gift Card" << endl;
-	cout << "4.Done Ordering" << endl;
-	cout << "0. Exit" << endl;
+	cout << "4.Search Item" << endl;
+	cout << "5.Done Ordering" << endl;
+	cout << "6. Exit" << endl;
 	cout << "choice:";
 }
 void displayFoodMenu()
@@ -272,8 +293,10 @@ void displayMenueOrder(const string item[][COL], const double price[][COL], int 
 //////////////////Function that check input form 1~5:
 int inputValidate(int input)
 {
-	while (input <1 || input >5)
+	while (input <1 || input >6)
 	{
+	    cin.clear();
+        cin.ignore(INT_MAX, '\n');
 		cout << "Sorry, not that option. Please enter 1~5: ";
 		cin >> input;
 	}
@@ -284,6 +307,8 @@ int inputQuantityValidate(int qt)
 {
 	while (qt <= 0)
 	{
+	    cin.clear();
+        cin.ignore(INT_MAX, '\n');
 		cout << "Sorry, quantity cannot be negative, please reenter: ";
 		cin >> qt;
 	}
@@ -381,4 +406,91 @@ void saveDataInFile()
 	outputFile.close();
 }
 
+/////////////Function display all menu
+bool SearchItem(string item)
+{
+////////////////////////////////////////////////////////////////
+///Add vector to save all item and it price for sort using
+  vector<string> ALLITEM;
+  for(int row=0; row<ROW; row++)
+    for(int col=0; col<COL; col++)
+      ALLITEM.push_back(itemName[row][col]);
+  vector<double> ALLPRICE;
+  for(int row=0; row<ROW; row++)
+    for(int col=0; col<COL; col++)
+      ALLPRICE.push_back(itemPrice[row][col]);
+//End
+//////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////
+//sort ALLITEM and ALLPRICE in accending way
+  int startIt, minIndex;
+  string minValue;
+  double temPr;
+  for(startIt=0; startIt<(ALLITEM.size()-1); startIt++)
+  {
+    minIndex = startIt;
+    minValue = ALLITEM[startIt];
+    for(int index=startIt+1; index<(ALLITEM.size()); index++)
+    {
+      if(ALLITEM[index]<minValue)
+      {
+        minValue = ALLITEM[index];
+        minIndex = index;
+      }
+    }
+    ALLITEM[minIndex] = ALLITEM[startIt];
+    ALLITEM[startIt] = minValue;
+    temPr = ALLPRICE[minIndex];
+    ALLPRICE[minIndex] = ALLPRICE[startIt];
+    ALLPRICE[startIt] = temPr;
+  }
+//End sorting
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+//Finding item
+  int first =0,
+      last = ALLITEM.size()-1,
+      middle,
+      position = -1;
+      bool find = false;
+  while(!find && first<=last)
+  {
+    middle = (first+last) / 2;
+    if(ALLITEM[middle] == item)
+    {
+      find = true;
+      position = middle;
+    }
+    else if(ALLITEM[middle] > item)
+      last = middle-1;
+    else
+      first = middle+1;
+  }
+  return find;
+}
+
+/////////////////Function for search item and add it to order
+void AddItem(string item, int number)
+{
+////////////////////////////////////////////////////////
+//find the position search item in the 2-D array
+  int row, col;
+  for(int rw=0; rw<ROW; rw++)
+    for(int cl=0; cl<COL; cl++)
+    {
+      if(item == itemName[rw][cl])
+      {
+        row = rw;
+        col = cl;
+      }
+    }
+//End Finding
+////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////
+//ADD order
+	numberOfOrder[row][col] += number;
+	commulateTotal += number * itemPrice[row][col];
+}
