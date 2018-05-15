@@ -296,7 +296,7 @@ int inputValidate(int input)
 	while (input <1 || input >6)
 	{
 	    cin.clear();
-        cin.ignore(INT_MAX, '\n');
+        cin.ignore(INT8_MAX, '\n');
 		cout << "Sorry, not that option. Please enter 1~5: ";
 		cin >> input;
 	}
@@ -308,7 +308,7 @@ int inputQuantityValidate(int qt)
 	while (qt <= 0)
 	{
 	    cin.clear();
-        cin.ignore(INT_MAX, '\n');
+        cin.ignore(INT8_MAX, '\n');
 		cout << "Sorry, quantity cannot be negative, please reenter: ";
 		cin >> qt;
 	}
