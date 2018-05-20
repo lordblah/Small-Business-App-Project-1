@@ -1,4 +1,4 @@
-# Small-Business-App-Project-1
+# Coffe Sales Terminal
 This project is a program that creates a receipts for small coffee shops. 
 
 Product Perspective
