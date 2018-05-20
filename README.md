@@ -31,3 +31,6 @@ A configurable toolkit of functions including:
 
 ### flow Chart
 https://drive.google.com/open?id=16-CqhUAzDOaYWID6L6hk-u7B46j7FJOn
+
+[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
