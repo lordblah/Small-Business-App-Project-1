@@ -1,8 +1,6 @@
 # Coffe Sales Terminal
 This project is a program that creates a receipts for small coffee shops. 
 
-Product Perspective
-Primary purpose of the application functionality?
  
 # The Program provides:
 Business intelligence for small business analytics which includes:
