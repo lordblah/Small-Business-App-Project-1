@@ -1,0 +1,18 @@
+Casher:bot2						Sun May 20 21:50:27 2018
+
+ITEM                   			quantity			PRICE
+-------------------------------------------------------------------------------------
+Bacon Sandwich                			2			$9.00
+Bistro Box                    			1			$5.50
+Turkey Burger                 			1			$4.50
+Americano Caffe               			1			$3.50
+Carmel Macchiato              			1			$4.50
+Espresso                      			1			$5.00
+5 dollar gift card            			1			$5.00
+10 dollar gift card           			1			$10.00
+15 dollar gift card           			1			$15.00
+-------------------------------------------------------------------------------------
+                                           Sub-total: $62.00
+                                                  TAX:8.5%
+                                                   + $5.27
+Today's total sell is $ 67.27
