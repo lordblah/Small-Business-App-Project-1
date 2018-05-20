@@ -4,9 +4,9 @@ This project is a program that creates a receipts for small coffee shops.
  
 # The Program provides:
 Business intelligence for small business analytics which includes:
-Sales Transactions
-Track sale performance of associates
- *Creates database for trending products
+* Sales Transactions
+* Track sale performance of associates
+* Creates database for trending products
 
 
 # Product Functions
