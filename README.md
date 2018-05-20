@@ -11,18 +11,18 @@ Track sale performance of associates
 
 # Product Functions
 The overall description of functionality:
-*Provides business intelligence of revenue 
-*Provides business intelligence of treading products.
-*Provides a digital record of item inventory.
-*Documents user track record of sales.
-*Provide accurate easy-to-use, on-demand print and on-line of receipts. 
-*Anti-fraud tracking of associates. 
+* Provides business intelligence of revenue 
+* Provides business intelligence of treading products.
+* Provides a digital record of item inventory.
+* Documents user track record of sales.
+* Provide accurate easy-to-use, on-demand print and on-line of receipts. 
+* Anti-fraud tracking of associates. 
 
 # Technical functionality
 A configurable toolkit of functions including:
-*Ability to download for hardcopy use
-*Reusable components for must functionality
-*Use of C++ programming 
+* Ability to download for hardcopy use
+* Reusable components for must functionality
+* Use of C++ programming 
 ## Authors
 
 * **Ming Chen** - *Initial work* - [Mingchen2333](https://github.com/Mingchen2333)
