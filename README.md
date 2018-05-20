@@ -1,3 +1,4 @@
+[![Build Status][travis-image]][travis-url]
 # Coffe Sales Terminal
 This project is a program that creates a receipts for small coffee shops. 
 
